@@ -7,6 +7,8 @@ import numpy as np
 import csv
 import gudhi 
 
+print("First the Program prints out the graphs and then it prints out the rips (close all of the graphs to get to the rips")
+
 x = [] #name of counties
 y = [] #min upload speed
 z = [] #max upload speed
@@ -51,8 +53,8 @@ fig=plt.figure()
 ax=fig.add_subplot(111,projection='3d')
 #ax.scatter(y,z,w,color='blue',marker='o')
 for (k,v) in enumerate(y):
-	ax.scatter(y[k], z[k], w[k], marker='o')
-	#ax.legend([x[k]])
+  ax.scatter(y[k], z[k], w[k], marker='o')
+  #ax.legend([x[k]])
 ax.legend(x)
 ax.set_title('I hate datasets in 3d')
 ax.set_xlabel('min')
@@ -61,10 +63,10 @@ ax.set_zlabel('Avg')
 plt.show()
 
 ############## hw 3 portion
-
+#brings in data and sends it into gudhi
 distance_matrix = gudhi.read_lower_triangular_matrix_from_csv_file(csv_file='Maryland_Broadband_Speed_Test__County_Upload.csv')
-rips_complex = gudhi.RipsComplex(distance_matrix=distance_matrix, max_edge_length=12.0)
-simplex_tree = rips_complex.create_simplex_tree(max_dimension=1)
+rips_complex = gudhi.RipsComplex(distance_matrix=distance_matrix, max_edge_length=12.0) #setting parameters
+simplex_tree = rips_complex.create_simplex_tree(max_dimension=1) 
 result_str = 'Rips complex is of dimension ' + repr(simplex_tree.dimension()) + ' - ' + \
     repr(simplex_tree.num_simplices()) + ' simplices - ' + \
     repr(simplex_tree.num_vertices()) + ' vertices.'
@@ -72,5 +74,18 @@ print(result_str)
 fmt = '%s -> %.2f'
 for filtered_value in simplex_tree.get_filtration():
     print(fmt % tuple(filtered_value))
+#calculation2
+print("Rips Calculations2")
+distance_matrix2 = gudhi.read_lower_triangular_matrix_from_csv_file(csv_file='Maryland_Broadband_Speed_Test__County_Upload.csv')
+rips_complex2 = gudhi.RipsComplex(distance_matrix=distance_matrix2, max_edge_length=20.0)
+simplex_tree2 = rips_complex2.create_simplex_tree(max_dimension=2)
+result_str2 = 'Rips complex is of dimension ' + repr(simplex_tree2.dimension()) + ' - ' + \
+    repr(simplex_tree2.num_simplices()) + ' simplices - ' + \
+    repr(simplex_tree2.num_vertices()) + ' vertices.'
+print(result_str2)
+fmt = '%s -> %.2f'
+for filtered_value2 in simplex_tree2.get_filtration():
+    print(fmt % tuple(filtered_value2))
+
 
 
